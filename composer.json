@@ -1,0 +1,23 @@
+{
+    "name": "vincent/sp-budget",
+    "description": "SP PHP - Application Budget",
+    "type": "project",
+    "authors": [
+        {
+            "name": "vincent sureau",
+            "email": "vincentsureau5@gmail.com"
+        }
+    ],
+    "require": {
+        "altorouter/altorouter": "^2.0",
+        "league/plates": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Appbudget\\": "app/"
+        }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.0"
+    }
+}
