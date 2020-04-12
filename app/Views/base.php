@@ -6,7 +6,7 @@
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="<?= $basePath ?>/assets/css/style.css">
+        <link rel="stylesheet" href="<?= $basePath ?>/assets/app.css">
     </head>
 
     <body>
@@ -27,7 +27,8 @@
         src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-        <script src="<?= $basePath ?>/assets/js/app.js"></script>
+        <script src="<?= $basePath ?>/assets/runtime.js"></script>
+        <script src="<?= $basePath ?>/assets/app.js"></script>
         
         <?= $this->section('js'); ?>
         

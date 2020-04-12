@@ -2,8 +2,8 @@
 
 namespace Appbudget\Controllers;
 
-use League\Plates\Engine as Plates;
 use Appbudget\Application;
+use League\Plates\Engine as Plates;
 
 abstract class CoreController {
 
