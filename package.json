@@ -11,5 +11,8 @@
   "main": "index.js",
   "repository": "git@github.com:VincentSureau/SP-Budget.git",
   "author": "vincent sureau <vincentsureau5@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "chart.js": "^2.9.3"
+  }
 }

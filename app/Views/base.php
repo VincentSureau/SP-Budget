@@ -13,7 +13,9 @@
         <header> 
             <?= $this->insert('partials/_navbar'); ?>
         </header>
-
+        <aside>
+            <?= $this->insert('partials/_sidenav'); ?>
+        </aside>
         <main>
 
             <?= $this->section('content'); ?>
@@ -28,6 +30,7 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
         <script src="<?= $basePath ?>/assets/runtime.js"></script>
+        <script src="<?= $basePath ?>/assets/vendors~app.js"></script>
         <script src="<?= $basePath ?>/assets/app.js"></script>
         
         <?= $this->section('js'); ?>
