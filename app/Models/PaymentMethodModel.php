@@ -16,10 +16,10 @@ class PaymentMethodModel extends CoreModel {
     
     public static function find($id){
         $sql = 'SELECT
-        `category`.`id`,
-        `category`.`name`
+        `payment_method`.`id`,
+        `payment_method`.`name`
         FROM ' . static::TABLE_NAME .
-        ' WHERE `category`.`id` = :id
+        ' WHERE `payment_method`.`id` = :id
         ';
         
         $pdo = Database::getPDO();
@@ -33,8 +33,8 @@ class PaymentMethodModel extends CoreModel {
     
     public static function findAll(){
         $sql = 'SELECT 
-        `category`.`id`,
-        `category`.`name`
+        `payment_method`.`id`,
+        `payment_method`.`name`
         FROM ' . static::TABLE_NAME .
         ' ORDER BY id ASC';
         $pdo = Database::getPDO();

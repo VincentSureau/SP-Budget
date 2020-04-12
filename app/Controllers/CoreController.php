@@ -9,8 +9,12 @@ abstract class CoreController {
 
     protected $templateEngine;
 
+    protected $basePath;
+
     public function __construct(Application $application) {
         $config = $application->getConfig();
+        
+        $this->basePath = $config['BASE_PATH'];
 
         // instantiate Template Engine and set app/Views as template folder
         $this->templateEngine = new Plates(__DIR__ .'/../Views');
@@ -59,4 +63,12 @@ abstract class CoreController {
         exit;
     }
   
+
+    /**
+     * Get the value of basePath
+     */ 
+    public function getBasePath()
+    {
+        return $this->basePath;
+    }
 }

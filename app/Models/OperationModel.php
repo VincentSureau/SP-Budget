@@ -6,7 +6,7 @@ use PDO;
 use Appbudget\Utils\Database;
 use Appbudget\Models\CoreModel;
 
-class QuizModel extends CoreModel {
+class OperationModel extends CoreModel {
     protected $id;
     
     protected $amount;
@@ -18,7 +18,10 @@ class QuizModel extends CoreModel {
     protected $paymentMethod;
     
     protected $category;
-    
+
+    protected $createdAt;
+
+    protected $updatedAt;
     
     const TABLE_NAME = 'operation';
     
@@ -85,104 +88,144 @@ class QuizModel extends CoreModel {
     protected function update() {
         // toDo
     }   
-    
+
     /**
-    * Get the value of title
-    */ 
-    public function getTitle()
+     * Get the value of createdAt
+     */ 
+    public function getCreatedAt()
     {
-        return $this->title;
+        return $this->createdAt;
     }
-    
+
     /**
-    * Set the value of title
-    *
-    * @return  self
-    */ 
-    public function setTitle($title)
+     * Set the value of createdAt
+     *
+     * @return  self
+     */ 
+    public function setCreatedAt($createdAt)
     {
-        $this->title = $title;
-        
+        $this->createdAt = $createdAt;
+
         return $this;
     }
-    
+
     /**
-    * Get the value of description
-    */ 
-    public function getDescription()
+     * Get the value of updatedAt
+     */ 
+    public function getUpdatedAt()
     {
-        return $this->description;
+        return $this->updatedAt;
     }
-    
+
     /**
-    * Set the value of description
-    *
-    * @return  self
-    */ 
-    public function setDescription($description)
+     * Set the value of updatedAt
+     *
+     * @return  self
+     */ 
+    public function setUpdatedAt($updatedAt)
     {
-        $this->description = $description;
-        
+        $this->updatedAt = $updatedAt;
+
         return $this;
     }
-    
+
     /**
-    * Get the value of authorId
-    */ 
-    public function getAuthorId()
+     * Get the value of date
+     */ 
+    public function getDate()
     {
-        return $this->authorId;
+        return $this->date;
     }
-    
+
     /**
-    * Set the value of authorId
-    *
-    * @return  self
-    */ 
-    public function setAuthorId($authorId)
+     * Set the value of date
+     *
+     * @return  self
+     */ 
+    public function setDate($date)
     {
-        $this->authorId = $authorId;
-        
+        $this->date = $date;
+
         return $this;
     }
-    
+
     /**
-    * Get the value of authorFirstName
-    */ 
-    public function getAuthorFirstName()
+     * Get the value of category
+     */ 
+    public function getCategory()
     {
-        return $this->authorFirstName;
+        return $this->category;
     }
-    
+
     /**
-    * Set the value of authorFirstName
-    *
-    * @return  self
-    */ 
-    public function setAuthorFirstName($authorFirstName)
+     * Set the value of category
+     *
+     * @return  self
+     */ 
+    public function setCategory($category)
     {
-        $this->authorFirstName = $authorFirstName;
-        
+        $this->category = $category;
+
         return $this;
     }
-    
+
     /**
-    * Get the value of authorLastName
-    */ 
-    public function getAuthorLastName()
+     * Get the value of paymentMethod
+     */ 
+    public function getPaymentMethod()
     {
-        return $this->authorLastName;
+        return $this->paymentMethod;
     }
-    
+
     /**
-    * Set the value of authorLastName
-    *
-    * @return  self
-    */ 
-    public function setAuthorLastName($authorLastName)
+     * Set the value of paymentMethod
+     *
+     * @return  self
+     */ 
+    public function setPaymentMethod($paymentMethod)
     {
-        $this->authorLastName = $authorLastName;
-        
+        $this->paymentMethod = $paymentMethod;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of amount
+     */ 
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    /**
+     * Set the value of amount
+     *
+     * @return  self
+     */ 
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of comment
+     */ 
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * Set the value of comment
+     *
+     * @return  self
+     */ 
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+
         return $this;
     }
 }
