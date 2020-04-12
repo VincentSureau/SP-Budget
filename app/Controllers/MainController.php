@@ -2,6 +2,7 @@
 
 namespace Appbudget\Controllers;
 
+use Appbudget\Utils\User;
 use Appbudget\Controllers\CoreController;
 
 class MainController extends CoreController {
@@ -13,6 +14,12 @@ class MainController extends CoreController {
      */
     public function home() 
     {
+        $user = User::getConnectedUser();
+        if (empty($user)) {
+            header("Location: {$this->router->generate("user_login")}");
+            exit();
+        } 
+
         $this->render('main/home', []);
     }
 

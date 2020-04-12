@@ -2,6 +2,7 @@
 
 namespace Appbudget\Controllers;
 
+use Appbudget\Utils\User;
 use Appbudget\Application;
 use League\Plates\Engine as Plates;
 
@@ -11,9 +12,11 @@ abstract class CoreController {
 
     protected $basePath;
 
+    public $router;
+
     public function __construct(Application $application) {
         $config = $application->getConfig();
-        
+        $this->router = $application->getRouter();
         $this->basePath = $config['BASE_PATH'];
 
         // instantiate Template Engine and set app/Views as template folder
@@ -22,10 +25,11 @@ abstract class CoreController {
         // add default variables to all templates
         $this->templateEngine->addData(
             [
-                // may be used later to create dynamic navigation
+                'router' => $this->router,
+                // used to create dynamic navigation
                 'basePath' => $config['BASE_PATH'],
-                // will be dynamic later on the project
-                'isConnected' => true,
+                'connectedUser' => User::getConnectedUser(),
+                'isConnected' => User::isConnected(),
             ]
         );
     }

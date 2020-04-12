@@ -2,6 +2,7 @@
 
 namespace Appbudget\Controllers;
 
+use Appbudget\Utils\User;
 use Appbudget\Models\CategoryModel;
 use Appbudget\Models\OperationModel;
 use Appbudget\Models\PaymentMethodModel;
@@ -16,6 +17,12 @@ class OperationController extends CoreController {
      */
     public function add() 
     {
+        $user = User::getConnectedUser();
+        if (empty($user)) {
+            header("Location: {$this->router->generate("user_login")}");
+            exit();
+        } 
+        
         $operation = new OperationModel();
         $operation
             ->setCreatedAt(new \DateTime("now"))
@@ -23,7 +30,6 @@ class OperationController extends CoreController {
             ->setDate(new \DateTime("now"))
             ;
 
-        var_dump($_POST);
         $errorList=[];
 
         if(!empty($_POST)) {
@@ -63,7 +69,8 @@ class OperationController extends CoreController {
             }
 
             if(empty($errorList)) {
-                header("Location: {$this->getBasePath()}");
+                header("Location: {$this->router->generate("main_home")}");
+                exit();
             }
         }
 

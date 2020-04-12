@@ -3,7 +3,7 @@
 
 <!-- content -->
 <div class="container">
-    <form class="z-depth-4 form" action="<?= $basePath ?>/ajouter-une-operation" method="POST">
+    <form class="z-depth-4 form" action="<?= $router->generate("main_home") ?>/ajouter-une-operation" method="POST">
         <div class="row">
             <h2 class="center-align">Ajouter une opération</h2>
         </div>

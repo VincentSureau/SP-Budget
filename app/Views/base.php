@@ -17,7 +17,6 @@
             <?= $this->insert('partials/_sidenav'); ?>
         </aside>
         <main>
-
             <?= $this->section('content'); ?>
             
         </main>

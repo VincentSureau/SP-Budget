@@ -30,6 +30,8 @@ class Application {
 	public function defineRoutes() {
 		$this->router->map('GET', '/', 'MainController#home', 'main_home');
 		$this->router->map('GET|POST', '/ajouter-une-operation', 'OperationController#add', 'operation_add');
+		$this->router->map('GET|POST', '/connexion', 'UserController#login', 'user_login');
+		$this->router->map('GET', '/logout', 'UserController#logout', 'user_logout');
 	}
 
 	public function run() {
