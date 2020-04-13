@@ -33,7 +33,20 @@ class OperationModel extends CoreModel {
     const TABLE_NAME = 'operation';
     
     public static function find($id){
-        $sql = '';
+        $sql = 'SELECT
+        `operation`.`id`,
+        `operation`.`payment_method_id` AS paymentMethodId,
+        `operation`.`user_id` AS userId,
+        `operation`.`category_id` AS categoryId,
+        `operation`.`date`,
+        `operation`.`comment`,
+        `category`.`name` AS category,
+        `payment_method`.`name` AS paymentMethod
+        FROM ' . static::TABLE_NAME .
+        ' INNER JOIN `category` ON `category`.`id` = `operation`.`category_id` 
+        INNER JOIN `payment_method` ON `payment_method`.`id` = `operation`.`payment_method_id`
+        WHERE `operation`.`id` = :id
+        ';
         
         $pdo = Database::getPDO();
         $pdoStatement = $pdo->prepare($sql);
@@ -45,7 +58,20 @@ class OperationModel extends CoreModel {
     }
     
     public static function findAll(){
-        $sql = '';
+        $sql = 'SELECT
+        `operation`.`id`,
+        `operation`.`payment_method_id` AS paymentMethodId,
+        `operation`.`user_id` AS userId,
+        `operation`.`category_id` AS categoryId,
+        `operation`.`date`,
+        `operation`.`comment`,
+        `category`.`name` AS category,
+        `payment_method`.`name` AS paymentMethod
+        FROM ' . static::TABLE_NAME .
+        ' INNER JOIN `category` ON `category`.`id` = `operation`.`category_id`
+        INNER JOIN `payment_method` ON `payment_method`.`id` = `operation`.`payment_method_id`
+        ORDER BY date DESC
+        ';
         $pdo = Database::getPDO();
         $pdoStatement = $pdo->query($sql);
         $result = $pdoStatement->fetchAll(PDO::FETCH_CLASS, static::class);
@@ -53,7 +79,21 @@ class OperationModel extends CoreModel {
     }
     
     public static function findByUser($userId){
-        $sql = '';
+        $sql = 'SELECT
+        `operation`.`id`,
+        `operation`.`payment_method_id` AS paymentMethodId,
+        `operation`.`user_id` AS userId,
+        `operation`.`category_id` AS categoryId,
+        `operation`.`date`,
+        `operation`.`comment`,
+        `category`.`name` AS category,
+        `payment_method`.`name` AS paymentMethod
+        FROM ' . static::TABLE_NAME .
+        ' INNER JOIN `category` ON `category`.`id` = `operation`.`category_id`
+        INNER JOIN `payment_method` ON `payment_method`.`id` = `operation`.`payment_method_id`
+        WHERE `operation`.`user_id` = :userId
+        ORDER BY date DESC
+        ';
         $pdo = Database::getPDO();
         $pdoStatement = $pdo->prepare($sql);
         $pdoStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
@@ -63,7 +103,21 @@ class OperationModel extends CoreModel {
     }
     
     public static function findByUserAndId($userId, $id){
-        $sql = '';
+        $sql = 'SELECT
+        `operation`.`id`,
+        `operation`.`payment_method_id` AS paymentMethodId,
+        `operation`.`user_id` AS userId,
+        `operation`.`category_id` AS categoryId,
+        `operation`.`date`,
+        `operation`.`comment`,
+        `category`.`name` AS category,
+        `payment_method`.`name` AS paymentMethod
+        FROM ' . static::TABLE_NAME .
+        ' INNER JOIN `category` ON `category`.`id` = `operation`.`category_id`
+        INNER JOIN `payment_method` ON `payment_method`.`id` = `operation`.`payment_method_id`
+        WHERE `category`.`id` = :id
+        AND `user`.id`= :userId
+        ';
         $pdo = Database::getPDO();
         $pdoStatement = $pdo->prepare($sql);
         $pdoStatement->bindValue(':userId', $userId, PDO::PARAM_INT);

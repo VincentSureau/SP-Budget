@@ -33,6 +33,12 @@ class OperationController extends CoreController {
 
         $errorList=[];
 
+        $test1 = OperationModel::findAll();
+
+        $test2 = OperationModel::find(1);
+
+        $test3 = OperationModel::findByUser($user->getId());
+
         if(!empty($_POST)) {
             $category = \filter_input(INPUT_POST, 'category', FILTER_VALIDATE_INT);
             if($category) {
