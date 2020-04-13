@@ -36,7 +36,7 @@ class Application {
 
 	public function run() {
 		$match =  $this->router->match();
-		dump($match);
+		dump($this->router, $match);
 		if ($match) {
 			list($controllerName, $methodName) = explode('#', $match['target']);
 			$controllerName = 'Appbudget\Controllers\\'. $controllerName;
