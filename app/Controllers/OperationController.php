@@ -70,9 +70,8 @@ class OperationController extends CoreController {
             if(empty($errorList)) {
                 $result = $operation->insert();
 
-                dump($result);
-                // header("Location: {$this->router->generate("main_home")}");
-                // exit();
+                header("Location: {$this->router->generate("main_home")}");
+                exit();
             }
         }
 
