@@ -15,8 +15,8 @@ class Application {
 
     $config = parse_ini_file(__DIR__ . '/config.ini',true);
 
-    $this->config = $config;
-
+	$this->config = $config;
+	
     $this->router->setBasePath($config['BASE_PATH']);
 
     $this->defineRoutes();

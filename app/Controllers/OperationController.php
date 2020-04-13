@@ -33,12 +33,6 @@ class OperationController extends CoreController {
 
         $errorList=[];
 
-        $test1 = OperationModel::findAll();
-
-        $test2 = OperationModel::find(1);
-
-        $test3 = OperationModel::findByUser($user->getId());
-
         if(!empty($_POST)) {
             $category = \filter_input(INPUT_POST, 'category', FILTER_VALIDATE_INT);
             if($category) {
@@ -71,13 +65,14 @@ class OperationController extends CoreController {
             $comment = \filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             if($comment){
                 $operation->setComment($comment);
-            } else {
-                $errorList['comment'] = "Le commentaire saisi n'est pas valide";
             }
 
             if(empty($errorList)) {
-                header("Location: {$this->router->generate("main_home")}");
-                exit();
+                $result = $operation->insert();
+
+                dump($result);
+                // header("Location: {$this->router->generate("main_home")}");
+                // exit();
             }
         }
 

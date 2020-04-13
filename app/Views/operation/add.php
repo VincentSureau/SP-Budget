@@ -3,9 +3,9 @@
 
 <!-- content -->
 <div class="container">
-    <form class="z-depth-4 form" action="<?= $router->generate("main_home") ?>/ajouter-une-operation" method="POST">
+    <form class="z-depth-4 form" action="<?= $router->generate("main_home") ?>ajouter-une-operation" method="POST">
         <div class="row">
-            <h2 class="center-align">Ajouter une opération</h2>
+            <h1 class="center-align">Ajouter une opération</h1>
         </div>
         <div class="row center-align">
             <label>

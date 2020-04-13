@@ -29,12 +29,14 @@ class OperationModel extends CoreModel {
 
     protected $updatedAt;
 
+    protected $totalAmount;
     
     const TABLE_NAME = 'operation';
     
     public static function find($id){
         $sql = 'SELECT
         `operation`.`id`,
+        `operation`.`amount`,
         `operation`.`payment_method_id` AS paymentMethodId,
         `operation`.`user_id` AS userId,
         `operation`.`category_id` AS categoryId,
@@ -60,6 +62,7 @@ class OperationModel extends CoreModel {
     public static function findAll(){
         $sql = 'SELECT
         `operation`.`id`,
+        `operation`.`amount`,
         `operation`.`payment_method_id` AS paymentMethodId,
         `operation`.`user_id` AS userId,
         `operation`.`category_id` AS categoryId,
@@ -81,6 +84,7 @@ class OperationModel extends CoreModel {
     public static function findByUser($userId){
         $sql = 'SELECT
         `operation`.`id`,
+        `operation`.`amount`,
         `operation`.`payment_method_id` AS paymentMethodId,
         `operation`.`user_id` AS userId,
         `operation`.`category_id` AS categoryId,
@@ -105,6 +109,7 @@ class OperationModel extends CoreModel {
     public static function findByUserAndId($userId, $id){
         $sql = 'SELECT
         `operation`.`id`,
+        `operation`.`amount`,
         `operation`.`payment_method_id` AS paymentMethodId,
         `operation`.`user_id` AS userId,
         `operation`.`category_id` AS categoryId,
@@ -128,11 +133,40 @@ class OperationModel extends CoreModel {
     }
     
     public function insert() {
-        $sql = '';
-                
+        $sql = '
+        INSERT INTO ' . self::TABLE_NAME . ' (
+        `payment_method_id`
+        ,`user_id`
+        ,`category_id`
+        ,`amount`
+        ,`date`
+        ,`comment`
+        ,`created_at`
+        ,`updated_at`
+        )
+        VALUES (
+        :paymentMethodId
+        ,:userId
+        ,:categoryId
+        ,:amount
+        ,:date
+        ,:comment
+        ,NOW()
+        ,NOW()
+        )
+        ';
+
         $pdo = Database::getPDO();
-        
+
         $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement->bindParam(':paymentMethodId', $this->paymentMethodId, PDO::PARAM_INT);
+        $pdoStatement->bindParam(':userId', $this->userId, PDO::PARAM_INT);
+        $pdoStatement->bindParam(':categoryId', $this->categoryId, PDO::PARAM_INT);
+        $pdoStatement->bindParam(':amount', $this->amount, PDO::PARAM_STR);
+        $sqlDate = $this->date->format("Y-m-d H:i:s");
+        $pdoStatement->bindParam(':date', $sqlDate, PDO::PARAM_STR);
+        $pdoStatement->bindParam(':comment', $this->comment, PDO::PARAM_STR);
+        $updateDate = new \DateTime('now');
 
         $pdoStatement->execute();
         
@@ -144,6 +178,26 @@ class OperationModel extends CoreModel {
         
         $this->id = $pdo->lastInsertId();
         return true;
+    }
+
+    public static function findTotalStatByUser($userId, $startDate, $endDate){
+        $sql = 'SELECT 
+        SUM(`operation`.`amount` * `accounting_type`.`coefficient`) AS totalAmount
+        FROM ' . static::TABLE_NAME .
+        ' INNER JOIN `category` ON `operation`.`category_id` = `category`.`id`
+        INNER JOIN `accounting_type` ON `category`.`accounting_type_id` = `accounting_type`.`id`
+        WHERE `operation`.`user_id` = :userId
+        AND `operation`.`date` >= :startDate
+        AND `operation`.`date` <= :endDate
+        ';
+        $pdo = Database::getPDO();
+        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
+        $pdoStatement->bindValue(':startDate', $startDate, PDO::PARAM_STR);
+        $pdoStatement->bindValue(':endDate', $endDate, PDO::PARAM_STR);
+        $pdoStatement->execute();
+        $result = $pdoStatement->fetchObject(static::class);
+        return $result;   
     }
     
     protected function update() {
@@ -346,6 +400,26 @@ class OperationModel extends CoreModel {
     public function setCategoryId($categoryId)
     {
         $this->categoryId = $categoryId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of totalAmount
+     */ 
+    public function getTotalAmount()
+    {
+        return $this->totalAmount;
+    }
+
+    /**
+     * Set the value of totalAmount
+     *
+     * @return  self
+     */ 
+    public function setTotalAmount($totalAmount)
+    {
+        $this->totalAmount = $totalAmount;
 
         return $this;
     }

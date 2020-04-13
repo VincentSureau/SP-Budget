@@ -3,6 +3,8 @@
 namespace Appbudget\Controllers;
 
 use Appbudget\Utils\User;
+use Appbudget\Models\CategoryModel;
+use Appbudget\Models\OperationModel;
 use Appbudget\Controllers\CoreController;
 
 class MainController extends CoreController {
@@ -18,9 +20,31 @@ class MainController extends CoreController {
         if (empty($user)) {
             header("Location: {$this->router->generate("user_login")}");
             exit();
-        } 
+        }
 
-        $this->render('main/home', []);
+        if(!empty($_GET['startDate'])){
+            $startDate = \DateTime::createFromFormat('Y-m-d', $_GET['startDate']);
+        }
+        if(empty($startDate)){
+            $startDate = new \DateTime('first day of this month');
+        }
+        if(!empty($_GET['endDate'])){
+            $endDate = \DateTime::createFromFormat('Y-m-d', $_GET['endDate']);
+        }
+        if(empty($endDate)){
+            $endDate = new \DateTime('now');
+        }
+
+        $categories = CategoryModel::findAllStatByUser($user->getId(), $startDate->format("Y-m-d H:i:s"), $endDate->format("Y-m-d H:i:s"));
+        $operation = OperationModel::findTotalStatByUser($user->getId(), $startDate->format("Y-m-d H:i:s"), $endDate->format("Y-m-d H:i:s"));
+
+
+        $this->render('main/home', [
+            "categories" => $categories,
+            "operation" => $operation,
+            "startDate" => $startDate,
+            "endDate" => $endDate,
+        ]);
     }
 
     /**

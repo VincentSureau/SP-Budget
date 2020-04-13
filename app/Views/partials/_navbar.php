@@ -1,7 +1,9 @@
 <div class="navbar-fixed">
     <nav>
         <div class="nav-wrapper">
-            <a href="<?= $router->generate("main_home") ?>" class="brand-logo center">Logo</a>
+            <a href="<?= $router->generate("main_home") ?>" class="brand-logo center">
+                <img src="<?= $basePath ?>/images/logo-banking.svg" alt="Logo">
+            </a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <?php if($isConnected): ?>
                     <li><a href="<?= $router->generate("user_logout") ?>">Déconnexion</a></li>
