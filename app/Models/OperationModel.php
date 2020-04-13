@@ -16,12 +16,19 @@ class OperationModel extends CoreModel {
     protected $comment;
     
     protected $paymentMethod;
+
+    protected $paymentMethodId;
     
     protected $category;
+
+    protected $categoryId;
+
+    protected $userId;
 
     protected $createdAt;
 
     protected $updatedAt;
+
     
     const TABLE_NAME = 'operation';
     
@@ -225,6 +232,66 @@ class OperationModel extends CoreModel {
     public function setComment($comment)
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of userId
+     */ 
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Set the value of userId
+     *
+     * @return  self
+     */ 
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of paymentMethodId
+     */ 
+    public function getPaymentMethodId()
+    {
+        return $this->paymentMethodId;
+    }
+
+    /**
+     * Set the value of paymentMethodId
+     *
+     * @return  self
+     */ 
+    public function setPaymentMethodId($paymentMethodId)
+    {
+        $this->paymentMethodId = $paymentMethodId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of categoryId
+     */ 
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
+
+    /**
+     * Set the value of categoryId
+     *
+     * @return  self
+     */ 
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
 
         return $this;
     }

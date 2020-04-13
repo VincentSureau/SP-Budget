@@ -21,13 +21,14 @@ class OperationController extends CoreController {
         if (empty($user)) {
             header("Location: {$this->router->generate("user_login")}");
             exit();
-        } 
+        }
         
         $operation = new OperationModel();
         $operation
             ->setCreatedAt(new \DateTime("now"))
             ->setUpdatedAt(new \DateTime("now"))
             ->setDate(new \DateTime("now"))
+            ->setUserId($user->getId())
             ;
 
         $errorList=[];
@@ -35,14 +36,14 @@ class OperationController extends CoreController {
         if(!empty($_POST)) {
             $category = \filter_input(INPUT_POST, 'category', FILTER_VALIDATE_INT);
             if($category) {
-                $operation->setCategory($category);
+                $operation->setCategoryId($category);
             } else {
                 $errorList['category'] = "La catégorie n'est pas valide";
             }
             
             $paymentMethod = \filter_input(INPUT_POST, 'paymentMethod', FILTER_VALIDATE_INT);
             if($paymentMethod) {
-                $operation->setPaymentMethod($paymentMethod);
+                $operation->setPaymentMethodId($paymentMethod);
             } else {
                 $errorList['paymentMethod'] = "Le moyen de paiement n'est pas valide";
             }

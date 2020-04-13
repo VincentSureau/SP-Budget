@@ -19,11 +19,11 @@
         </div>
         <div class="row">
             <div class="input-field col s12 l6">
-                <input id="amount" name="amount" type="number" step="0.01" class="validate">
+                <input id="amount" name="amount" type="number" step="0.01" class="validate" value="<?= $operation->getAmount() ?? 0 ?>">
                 <label for="amount">Montant</label>
             </div>
             <div class="input-field col s12 l6">
-                <input type="date" id="date" name="date" class="validate">
+                <input type="date" id="date" name="date" class="validate" value="<?= $operation->getDate()->format("Y-m-d") ?>">
                 <label for="date" class="">Date</label>
             </div>
         </div>
@@ -32,7 +32,7 @@
                 <select id="category" name="category" class="validate" required>
                     <option value="" disabled selected>Choisir une catégorie</option>
                     <?php foreach($categories as $category) : ?>
-                        <option value="<?= $category->getId() ?>"><?= $category->getName() ?></option>
+                        <option value="<?= $category->getId() ?>" <?= ($operation->getCategoryId() == $category->getId()) ? "selected": "" ?> ><?= $category->getName() ?></option>
                     <?php endforeach; ?>
                 </select>
                 <label>Catégorie</label>
@@ -41,14 +41,14 @@
                 <select id="paymentMethod" name="paymentMethod" class="validate" required>
                     <option value="" disabled selected>Choisir un mode de paiement</option>
                     <?php foreach($paymentMethods as $paymentMethod) : ?>
-                        <option value="<?= $paymentMethod->getId() ?>"><?= $paymentMethod->getName() ?></option>
+                        <option value="<?= $paymentMethod->getId() ?>" <?= ($operation->getPaymentMethodId() == $paymentMethod->getId()) ? "selected": "" ?>><?= $paymentMethod->getName() ?></option>
                     <?php endforeach; ?>
                 </select>
                 <label>Mode de paiement</label>
             </div>
         </div>
         <div class="input-field col s12">
-            <textarea id="comment" name="comment" class="materialize-textarea"></textarea>
+            <textarea id="comment" name="comment" class="materialize-textarea"><?= $operation->getComment() ?? "" ?></textarea>
             <label for="comment">Commentaire</label>
         </div>
         <div class="input-field col s12 right-align">
