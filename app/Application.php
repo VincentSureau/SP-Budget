@@ -16,7 +16,6 @@ class Application {
     $config = parse_ini_file(__DIR__ . '/config.ini',true);
 
 	$this->config = $config;
-	dump($config);
     $this->router->setBasePath($config['BASE_PATH']);
 
     $this->defineRoutes();
@@ -36,7 +35,6 @@ class Application {
 
 	public function run() {
 		$match =  $this->router->match();
-		dump($this->router, $match);
 		if ($match) {
 			list($controllerName, $methodName) = explode('#', $match['target']);
 			$controllerName = 'Appbudget\Controllers\\'. $controllerName;
