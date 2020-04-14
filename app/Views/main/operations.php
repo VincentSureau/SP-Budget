@@ -3,7 +3,7 @@
 
 <!-- content -->
 <div class="container">
-    <h1 class="center-align">Mes dépenses par catégorie</h1>
+    <h1 class="center-align">Mes opérations</h1>
     <div class="row">
         <form class="col s12 l8 offset-l2 xl6 offset-xl3" action="<?= $router->generate("main_home") ?>">
             <div class="row">
@@ -34,36 +34,33 @@
 
     <div class="row">
 
-    <?php if(!empty($categories)): ?>
-        <div class="col s12 l6 push-l6">
-            <div class="chart-pie">
-                <canvas id="myPieChart"  width="350" height="350"></canvas>
-            </div>
-        </div>
-        <div class="col s12 l6 pull-l6">
-            <table>
+    <?php if(!empty($operations)): ?>
+        <div class="col s12 l10 offset-l1 xl8 offset-xl2">
+            <table class="striped highlight">
                 <thead>
                     <tr>
                         <th>Catégorie</th>
+                        <th>Date</th>
                         <th>Montant</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <?php foreach($categories as $category): ?>
+                    <?php foreach($operations as $operation): ?>
                     <tr>
-                        <td><?= $category->getName() ?></td>
-                        <td class="<?= $category->getAccountingTypeCoefficient() > 0 ? "green-text" : "red-text" ?>">
-                            <?= $category->getTotalAmount() ?> &euro;
+                        <td><?= $operation->getCategory() ?></td>
+                        <td><?= (\DateTime::createFromFormat('Y-m-d H:i:s',$operation->getDate()))->format('d/m/Y') ?></td>
+                        <td class="<?= $operation->getAmount() > 0 ? "green-text" : "red-text" ?>">
+                            <?= $operation->getAmount() ?> &euro;
                         </td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>Total</th>
-                        <th class="<?= $operation->getTotalAmount() > 0 ? "green-text" : "red-text" ?>">
-                            <?= $operation->getTotalAmount() ?> &euro;
+                        <th colspan=2>Total</th>
+                        <th class="<?= $total > 0 ? "green-text" : "red-text" ?>">
+                            <?= $total ?> &euro;
                         </th>
                     </tr>
                 </tfoot>

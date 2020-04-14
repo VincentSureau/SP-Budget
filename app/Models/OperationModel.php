@@ -84,7 +84,7 @@ class OperationModel extends CoreModel {
     public static function findByUser($userId){
         $sql = 'SELECT
         `operation`.`id`,
-        `operation`.`amount`,
+        `operation`.`amount` * `accounting_type`.`coefficient` AS amount,
         `operation`.`payment_method_id` AS paymentMethodId,
         `operation`.`user_id` AS userId,
         `operation`.`category_id` AS categoryId,
@@ -95,6 +95,7 @@ class OperationModel extends CoreModel {
         FROM ' . static::TABLE_NAME .
         ' INNER JOIN `category` ON `category`.`id` = `operation`.`category_id`
         INNER JOIN `payment_method` ON `payment_method`.`id` = `operation`.`payment_method_id`
+        INNER JOIN `accounting_type` ON `category`.`accounting_type_id` = `accounting_type`.`id`
         WHERE `operation`.`user_id` = :userId
         ORDER BY date DESC
         ';

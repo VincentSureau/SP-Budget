@@ -1,4 +1,4 @@
-<?= $this->layout('base', ['myTitle' => 'Accueil']); ?>
+<?= $this->layout('base', ['myTitle' => 'La page demandée n\'existe pas']); ?>
 
 <!-- content -->
 <div class="container">
