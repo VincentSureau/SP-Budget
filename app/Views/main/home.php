@@ -9,6 +9,7 @@
             <form class="col s12 l8 offset-l2 xl6 offset-xl3 mb-0" action="<?= $router->generate("main_home") ?>">
                 <div class="row mb-0">
                     <div class="input-field col s6">
+                        <i class="material-icons prefix">date_range</i>
                         <input id="startDate" 
                             name="startDate" 
                             type="date" 
@@ -20,6 +21,7 @@
                         <label for="startDate">Du</label>
                     </div>
                     <div class="input-field col s6">
+                        <i class="material-icons prefix">date_range</i>
                         <input id="endDate" 
                             name="endDate" type="date" 
                             class="validate" 

@@ -12,6 +12,7 @@
                 <input type="hidden" name="date" value="<?= $order['date'] ?>">
                 <div class="row mb-0">
                     <div class="input-field col s6">
+                        <i class="material-icons prefix">date_range</i>
                         <input id="startDate" 
                             name="startDate" 
                             type="date" 
@@ -23,6 +24,7 @@
                         <label for="startDate">Du</label>
                     </div>
                     <div class="input-field col s6">
+                        <i class="material-icons prefix">date_range</i>
                         <input id="endDate" 
                             name="endDate" type="date" 
                             class="validate" 

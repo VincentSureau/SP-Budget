@@ -36,16 +36,19 @@
         </div>
         <div class="row">
             <div class="input-field col s12 l6">
+                <i class="material-icons prefix">euro_symbol</i>
                 <input id="amount" name="amount" type="number" step="0.01" class="validate" value="<?= $operation->getAmount() ?? 0 ?>">
                 <label for="amount">Montant</label>
             </div>
             <div class="input-field col s12 l6">
+                <i class="material-icons prefix">date_range</i>
                 <input type="date" id="date" name="date" class="validate" value="<?= $operation->getDate()->format("Y-m-d") ?>">
                 <label for="date" class="">Date</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12 l6">
+                <i class="material-icons prefix">shopping_cart</i>
                 <select id="category" name="category" class="validate" required>
                     <option value="" disabled selected>Choisir une catégorie</option>
                     <?php foreach($categories as $category) : ?>
@@ -55,6 +58,7 @@
                 <label>Catégorie</label>
             </div>
             <div class="input-field col s12 l6">
+                <i class="material-icons prefix">credit_card</i>
                 <select id="paymentMethod" name="paymentMethod" class="validate" required>
                     <option value="" disabled selected>Choisir un mode de paiement</option>
                     <?php foreach($paymentMethods as $paymentMethod) : ?>
@@ -65,6 +69,7 @@
             </div>
         </div>
         <div class="input-field col s12">
+            <i class="material-icons prefix">create</i>
             <textarea id="comment" name="comment" class="materialize-textarea"><?= $operation->getComment() ?? "" ?></textarea>
             <label for="comment">Commentaire</label>
         </div>
