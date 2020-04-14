@@ -33,7 +33,7 @@
             </form>
         </div>
 
-        <div class="row">
+        <div class="row flex-row">
 
         <?php if(!empty($categories)): ?>
             <div class="col s12 l6 push-l6">
