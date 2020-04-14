@@ -35,7 +35,7 @@
     <div class="row">
 
     <?php if(!empty($operations)): ?>
-        <div class="col s12 l10 offset-l1 xl8 offset-xl2">
+        <div class="col s12">
             <table class="striped highlight">
                 <thead>
                     <tr>
