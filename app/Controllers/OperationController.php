@@ -35,6 +35,8 @@ class OperationController extends CoreController {
 
         $errorList=[];
 
+        $isSubmitted = \filter_input(INPUT_POST, 'add', FILTER_SANITIZE_STRING) == "add"? true : false;
+
         if(!empty($_POST)) {
             $operation_type_selected = \filter_input(INPUT_POST, 'operation_type', FILTER_SANITIZE_STRING);
             if($operation_type_selected == "expense" || $operation_type_selected == "income"){
@@ -56,10 +58,10 @@ class OperationController extends CoreController {
             }
             
             $amount = \filter_input(INPUT_POST, 'amount', FILTER_VALIDATE_FLOAT);
-            if($amount) {
+            if($amount > 0) {
                 $operation->setAmount($amount);
             } else {
-                $errorList['amount'] = "Le moyen de paiement n'est pas valide";
+                $errorList['amount'] = "Le montant saisi n'est pas valide";
             }
 
             $date = \DateTime::createFromFormat('Y-m-d', $_POST['date']);
@@ -88,6 +90,7 @@ class OperationController extends CoreController {
             "errors" => $errorList,
             "operation" => $operation,
             "operation_type" => $operation_type,
+            "isSubmitted" => $isSubmitted,
         ]);
     }
 }

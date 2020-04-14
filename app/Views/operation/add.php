@@ -3,14 +3,14 @@
 
 <!-- content -->
 <div class="container">
-    <form class="z-depth-4 form" action="<?= $router->generate("main_home") ?>ajouter-une-operation" method="POST">
+    <form class="z-depth-4 card-rounded" action="<?= $router->generate("main_home") ?>ajouter-une-operation" method="POST">
         <div class="row">
             <h1 class="center-align">Ajouter une opération</h1>
         </div>
-        <?php if(!empty($errors)): ?>
-            <div class="errorList">
+        <?php if(!empty($errors) && $isSubmitted): ?>
+            <div class="card-panel red lighten-4">
                 <?php foreach($errors as $error): ?>
-                    <p class="red-text"><?= $error ?></p>
+                    <p class="red-text text-darken-4"><?= $error ?></p>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>

@@ -77,7 +77,7 @@ class MainController extends CoreController {
         $orderArgs = array_filter([
             "category" => $_GET["category"] ?? null,
             "amount" => $_GET["amount"] ?? null,
-            "date" => $_GET["date"] ?? null,
+            "date" => $_GET["date"] ?? "DESC",
             "startDate" => $startDate->format("Y-m-d H:i:s"),
             "endDate" => $endDate->format("Y-m-d H:i:s"),
         ]);
