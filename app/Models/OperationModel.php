@@ -88,11 +88,13 @@ class OperationModel extends CoreModel {
         $orderDate = $orderArgs["date"] ?? null;
         $orderAmount = $orderArgs["amount"] ?? null;
 
-        if($orderCategory == "DESC" || $orderCategory == "ASC") {
-            $orderClause = sprintf("ORDER BY category %s", $orderCategory);
-        }
+        // l' ordre par défaut est par Date donc il est important
+        // de laisser clause avec orderDate en premier
         if($orderDate == "DESC" || $orderDate == "ASC") {
             $orderClause = sprintf("ORDER BY date %s", $orderDate);
+        }
+        if($orderCategory == "DESC" || $orderCategory == "ASC") {
+            $orderClause = sprintf("ORDER BY category %s", $orderCategory);
         }
         if($orderAmount == "DESC" || $orderAmount == "ASC") {
             $orderClause = sprintf("ORDER BY amount %s", $orderAmount);
