@@ -81,8 +81,24 @@ class OperationModel extends CoreModel {
         return $result;   
     }
     
-    public static function findByUser($userId){
-        $sql = 'SELECT
+    public static function findByUser($userId, $orderArgs = []){
+        $orderClause = "ORDER BY date DESC";
+
+        $orderCategory = $orderArgs["category"] ?? null;
+        $orderDate = $orderArgs["date"] ?? null;
+        $orderAmount = $orderArgs["amount"] ?? null;
+
+        if($orderCategory == "DESC" || $orderCategory == "ASC") {
+            $orderClause = sprintf("ORDER BY category %s", $orderCategory);
+        }
+        if($orderDate == "DESC" || $orderDate == "ASC") {
+            $orderClause = sprintf("ORDER BY date %s", $orderDate);
+        }
+        if($orderAmount == "DESC" || $orderAmount == "ASC") {
+            $orderClause = sprintf("ORDER BY amount %s", $orderAmount);
+        }
+
+        $sql = "SELECT
         `operation`.`id`,
         `operation`.`amount` * `accounting_type`.`coefficient` AS amount,
         `operation`.`payment_method_id` AS paymentMethodId,
@@ -92,16 +108,20 @@ class OperationModel extends CoreModel {
         `operation`.`comment`,
         `category`.`name` AS category,
         `payment_method`.`name` AS paymentMethod
-        FROM ' . static::TABLE_NAME .
-        ' INNER JOIN `category` ON `category`.`id` = `operation`.`category_id`
+        FROM " . static::TABLE_NAME .
+        " INNER JOIN `category` ON `category`.`id` = `operation`.`category_id`
         INNER JOIN `payment_method` ON `payment_method`.`id` = `operation`.`payment_method_id`
         INNER JOIN `accounting_type` ON `category`.`accounting_type_id` = `accounting_type`.`id`
         WHERE `operation`.`user_id` = :userId
-        ORDER BY date DESC
-        ';
+        AND `operation`.`date` >= :startDate
+        AND `operation`.`date` <= :endDate
+        $orderClause
+        ";
         $pdo = Database::getPDO();
         $pdoStatement = $pdo->prepare($sql);
         $pdoStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
+        $pdoStatement->bindValue(':startDate', $orderArgs["startDate"], PDO::PARAM_STR);
+        $pdoStatement->bindValue(':endDate', $orderArgs["endDate"], PDO::PARAM_STR);
         $pdoStatement->execute();
         $result = $pdoStatement->fetchAll(PDO::FETCH_CLASS, static::class);
         return $result;   

@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="col s12 l6 pull-l6">
-            <table>
+            <table class="striped highlight">
                 <thead>
                     <tr>
                         <th>Catégorie</th>
@@ -53,7 +53,7 @@
                     <?php foreach($categories as $category): ?>
                     <tr>
                         <td><?= $category->getName() ?></td>
-                        <td class="<?= $category->getAccountingTypeCoefficient() > 0 ? "green-text" : "red-text" ?>">
+                        <td class="right-align <?= $category->getAccountingTypeCoefficient() > 0 ? "green-text" : "red-text" ?>">
                             <?= $category->getTotalAmount() ?> &euro;
                         </td>
                     </tr>
@@ -62,7 +62,7 @@
                 <tfoot>
                     <tr>
                         <th>Total</th>
-                        <th class="<?= $operation->getTotalAmount() > 0 ? "green-text" : "red-text" ?>">
+                        <th class="right-align <?= $operation->getTotalAmount() > 0 ? "green-text" : "red-text" ?>">
                             <?= $operation->getTotalAmount() ?> &euro;
                         </th>
                     </tr>

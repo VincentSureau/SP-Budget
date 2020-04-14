@@ -23,13 +23,13 @@ class MainController extends CoreController {
         }
 
         if(!empty($_GET['startDate'])){
-            $startDate = \DateTime::createFromFormat('Y-m-d', $_GET['startDate']);
+            $startDate = \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['startDate'] . ' 00:00:00');
         }
         if(empty($startDate)){
             $startDate = new \DateTime('first day of this month');
         }
         if(!empty($_GET['endDate'])){
-            $endDate = \DateTime::createFromFormat('Y-m-d', $_GET['endDate']);
+            $endDate = \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['endDate'] . ' 23:59:59');
         }
         if(empty($endDate)){
             $endDate = new \DateTime('now');
@@ -61,19 +61,28 @@ class MainController extends CoreController {
         }
 
         if(!empty($_GET['startDate'])){
-            $startDate = \DateTime::createFromFormat('Y-m-d', $_GET['startDate']);
+            $startDate = \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['startDate'] . ' 00:00:00');
         }
         if(empty($startDate)){
             $startDate = new \DateTime('first day of this month');
         }
         if(!empty($_GET['endDate'])){
-            $endDate = \DateTime::createFromFormat('Y-m-d', $_GET['endDate']);
+            $endDate = \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['endDate'] . ' 23:59:59');
         }
         if(empty($endDate)){
             $endDate = new \DateTime('now');
         }
 
-        $operations = OperationModel::findByUser($user->getId(), $startDate->format("Y-m-d H:i:s"), $endDate->format("Y-m-d H:i:s"));
+        // array filter ne garde que les valeur truthy donc pas besoin de callback ;)
+        $orderArgs = array_filter([
+            "category" => $_GET["category"] ?? null,
+            "amount" => $_GET["amount"] ?? null,
+            "date" => $_GET["date"] ?? null,
+            "startDate" => $startDate->format("Y-m-d H:i:s"),
+            "endDate" => $endDate->format("Y-m-d H:i:s"),
+        ]);
+
+        $operations = OperationModel::findByUser($user->getId(), $orderArgs);
 
         $total = array_reduce($operations, function($carry, $operation) {
             $carry += $operation->getAmount();
@@ -85,6 +94,7 @@ class MainController extends CoreController {
             "startDate" => $startDate,
             "endDate" => $endDate,
             "total" => $total,
+            "order" => $orderArgs,
         ]);
     }
 
