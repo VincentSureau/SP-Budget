@@ -22,6 +22,8 @@ class OperationController extends CoreController {
             header("Location: {$this->router->generate("user_login")}");
             exit();
         }
+
+        $operation_type = "expense";
         
         $operation = new OperationModel();
         $operation
@@ -34,6 +36,11 @@ class OperationController extends CoreController {
         $errorList=[];
 
         if(!empty($_POST)) {
+            $operation_type_selected = \filter_input(INPUT_POST, 'operation_type', FILTER_SANITIZE_STRING);
+            if($operation_type_selected == "expense" || $operation_type_selected == "income"){
+                $operation_type = $operation_type_selected;
+            }
+
             $category = \filter_input(INPUT_POST, 'category', FILTER_VALIDATE_INT);
             if($category) {
                 $operation->setCategoryId($category);
@@ -62,7 +69,7 @@ class OperationController extends CoreController {
                 $errorList['date'] = "La date saisie n'est pas valide";
             }
 
-            $comment = \filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $comment = \filter_input(INPUT_POST, 'amount', FILTER_SANITIZE_STRING);
             if($comment){
                 $operation->setComment($comment);
             }
@@ -75,12 +82,12 @@ class OperationController extends CoreController {
             }
         }
 
-
         $this->render('operation/add', [
-            "categories" => CategoryModel::findAll(),
+            "categories" => CategoryModel::findByType($operation_type),
             "paymentMethods" => PaymentMethodModel::findAll(),
             "errors" => $errorList,
             "operation" => $operation,
+            "operation_type" => $operation_type,
         ]);
     }
 }

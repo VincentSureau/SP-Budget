@@ -57,6 +57,24 @@ class CategoryModel extends CoreModel {
         return $result;   
     }
     
+    public static function findByType($operation_type = "expense"){
+        $sql = 'SELECT 
+        `category`.`id`,
+        `category`.`name`,
+        `accounting_type`.`id` AS accountingTypeId,
+        `accounting_type`.`type` AS accountingType
+        FROM ' . static::TABLE_NAME .
+        ' INNER JOIN `accounting_type` ON `category`.`accounting_type_id` = `accounting_type`.`id`
+        WHERE `accounting_type`.`type` = :operation_type
+        ORDER BY id ASC';
+        $pdo = Database::getPDO();
+        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement->bindValue(':operation_type', $operation_type, PDO::PARAM_STR);
+        $pdoStatement->execute();
+        $result = $pdoStatement->fetchAll(PDO::FETCH_CLASS, static::class);
+        return $result;
+    }
+    
     public static function findAllStatByUser($userId, $startDate, $endDate){
         $sql = 'SELECT 
         `category`.`id`,

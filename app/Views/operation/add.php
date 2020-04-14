@@ -7,13 +7,30 @@
         <div class="row">
             <h1 class="center-align">Ajouter une opération</h1>
         </div>
+        <?php if(!empty($errors)): ?>
+            <div class="errorList">
+                <?php foreach($errors as $error): ?>
+                    <p class="red-text"><?= $error ?></p>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
         <div class="row center-align">
             <label>
-                <input name="type" value="expense" type="radio" />
+                <input name="operation_type" 
+                    value="expense" 
+                    type="radio" 
+                    onchange="this.form.submit();"
+                    <?= $operation_type == "expense" ? "checked" : "" ?>
+                />
                 <span>Dépense</span>
             </label>
             <label>
-                <input name="type" value="income" type="radio" />
+                <input name="operation_type"
+                    value="income" 
+                    type="radio" 
+                    onchange="this.form.submit();"
+                    <?= $operation_type == "income" ? "checked" : "" ?>
+                />
                 <span>Revenu</span>
             </label>
         </div>
