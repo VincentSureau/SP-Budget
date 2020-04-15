@@ -77,10 +77,12 @@ class MainController extends CoreController {
         $orderArgs = array_filter([
             "category" => $_GET["category"] ?? null,
             "amount" => $_GET["amount"] ?? null,
-            "date" => $_GET["date"] ?? "DESC",
+            "date" => $_GET["date"] ?? null,
             "startDate" => $startDate->format("Y-m-d H:i:s"),
             "endDate" => $endDate->format("Y-m-d H:i:s"),
         ]);
+
+        dump($orderArgs);
 
         $operations = OperationModel::findByUser($user->getId(), $orderArgs);
 
