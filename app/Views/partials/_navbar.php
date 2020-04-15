@@ -10,7 +10,7 @@
                 <?php endif; ?>
             </ul>
             <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large">
-                <i class="material-icons">menu</i>Menu
+                <i class="material-icons">menu</i>
             </a>
         </div>
     </nav>
