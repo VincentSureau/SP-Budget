@@ -40,7 +40,7 @@
         "density": "4.0"
         }
     ],
-    "start_url": "/",
+    "start_url": "https://vincentsureau.alwaysdata.net/",
     "background_color": "#ee6e73",
     "display": "standalone",
     "scope": "/",
