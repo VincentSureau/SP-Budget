@@ -25,8 +25,8 @@ abstract class CoreController {
         // add default variables to all templates
         $this->templateEngine->addData(
             [
-                'router' => $this->router,
                 // used to create dynamic navigation
+                'router' => $this->router,
                 'basePath' => $config['BASE_PATH'],
                 'connectedUser' => User::getConnectedUser(),
                 'isConnected' => User::isConnected(),
