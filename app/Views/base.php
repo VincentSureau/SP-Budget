@@ -17,9 +17,9 @@
         <link rel="icon" type="image/png" sizes="96x96" href="<?= $basePath ?>/favicon-96x96.png">
         <link rel="icon" type="image/png" sizes="16x16" href="<?= $basePath ?>/favicon-16x16.png">
         <link rel="manifest" href="<?= $basePath ?>/manifest.webmanifest">
-        <meta name="msapplication-TileColor" content="#e95354">
+        <meta name="msapplication-TileColor" content="#ee6e73">
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-        <meta name="theme-color" content="#e95354">
+        <meta name="theme-color" content="#ee6e73">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="<?= $basePath ?>/assets/app.css">
