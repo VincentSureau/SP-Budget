@@ -48,6 +48,7 @@
         <script src="<?= $basePath ?>/assets/runtime.js"></script>
         <script src="<?= $basePath ?>/assets/vendors~app.js"></script>
         <script src="<?= $basePath ?>/assets/app.js"></script>
+        <script src="<?= $basePath ?>/assets/sw.js"></script>
         
         <?= $this->section('js'); ?>
         
