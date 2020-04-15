@@ -82,7 +82,7 @@ class OperationModel extends CoreModel {
     }
     
     public static function findByUser($userId, $orderArgs = []){
-        $orderClause = "ORDER BY date DESC";
+        $orderClause = "ORDER BY date DESC ";
 
         $orderCategory = $orderArgs["category"] ?? null;
         $orderDate = $orderArgs["date"] ?? null;
@@ -91,13 +91,13 @@ class OperationModel extends CoreModel {
         // l' ordre par défaut est par Date donc il est important
         // de laisser clause avec orderDate en premier
         if($orderDate == "DESC" || $orderDate == "ASC") {
-            $orderClause = sprintf("ORDER BY date %s", $orderDate);
+            $orderClause = sprintf("ORDER BY date %s ", $orderDate);
         }
         if($orderCategory == "DESC" || $orderCategory == "ASC") {
-            $orderClause = sprintf("ORDER BY category %s", $orderCategory);
+            $orderClause = sprintf("ORDER BY category %s ", $orderCategory);
         }
         if($orderAmount == "DESC" || $orderAmount == "ASC") {
-            $orderClause = sprintf("ORDER BY amount %s", $orderAmount);
+            $orderClause = sprintf("ORDER BY amount %s ", $orderAmount);
         }
 
         $sql = "SELECT
@@ -118,6 +118,31 @@ class OperationModel extends CoreModel {
         AND `operation`.`date` >= :startDate
         AND `operation`.`date` <= :endDate
         $orderClause
+        LIMIT :limit OFFSET :offset
+        ";
+        $pdo = Database::getPDO();
+        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement->bindValue(':userId', $userId, PDO::PARAM_INT);
+        $pdoStatement->bindValue(':startDate', $orderArgs["startDate"], PDO::PARAM_STR);
+        $pdoStatement->bindValue(':endDate', $orderArgs["endDate"], PDO::PARAM_STR);
+        $pdoStatement->bindValue(':limit', $orderArgs['limit'], PDO::PARAM_INT);
+        $pdoStatement->bindValue(':offset', $orderArgs['offset'], PDO::PARAM_INT);
+        $pdoStatement->execute();
+        $result = $pdoStatement->fetchAll(PDO::FETCH_CLASS, static::class);
+
+        return $result;   
+    }
+    
+    public static function countByUser($userId, $orderArgs = []){
+        $sql = "SELECT
+        COUNT(`operation`.`id`)
+        FROM " . static::TABLE_NAME .
+        " INNER JOIN `category` ON `category`.`id` = `operation`.`category_id`
+        INNER JOIN `payment_method` ON `payment_method`.`id` = `operation`.`payment_method_id`
+        INNER JOIN `accounting_type` ON `category`.`accounting_type_id` = `accounting_type`.`id`
+        WHERE `operation`.`user_id` = :userId
+        AND `operation`.`date` >= :startDate
+        AND `operation`.`date` <= :endDate
         ";
         $pdo = Database::getPDO();
         $pdoStatement = $pdo->prepare($sql);
@@ -125,7 +150,7 @@ class OperationModel extends CoreModel {
         $pdoStatement->bindValue(':startDate', $orderArgs["startDate"], PDO::PARAM_STR);
         $pdoStatement->bindValue(':endDate', $orderArgs["endDate"], PDO::PARAM_STR);
         $pdoStatement->execute();
-        $result = $pdoStatement->fetchAll(PDO::FETCH_CLASS, static::class);
+        $result = $pdoStatement->fetchColumn();
         return $result;   
     }
     

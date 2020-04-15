@@ -22,14 +22,14 @@ class MainController extends CoreController {
             exit();
         }
 
-        if(!empty($_GET['startDate'])){
-            $startDate = \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['startDate'] . ' 00:00:00');
+        if(!empty($_GET['start'])){
+            $startDate = \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['start'] . ' 00:00:00');
         }
         if(empty($startDate)){
             $startDate = new \DateTime('first day of this month');
         }
-        if(!empty($_GET['endDate'])){
-            $endDate = \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['endDate'] . ' 23:59:59');
+        if(!empty($_GET['end'])){
+            $endDate = \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['end'] . ' 23:59:59');
         }
         if(empty($endDate)){
             $endDate = new \DateTime('now');
@@ -54,38 +54,49 @@ class MainController extends CoreController {
      */
     public function operations()
     {
+        // la page n'est visible que pas les utilisateurs connectés
         $user = User::getConnectedUser();
         if (empty($user)) {
             header("Location: {$this->router->generate("user_login")}");
             exit();
         }
 
-        if(!empty($_GET['startDate'])){
-            $startDate = \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['startDate'] . ' 00:00:00');
+        // on teste la validité des dates saisies par l'utilisateur
+        if(!empty($_GET['start'])){
+            $startDate = \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['start'] . ' 00:00:00');
         }
         if(empty($startDate)){
             $startDate = new \DateTime('first day of this month');
         }
-        if(!empty($_GET['endDate'])){
-            $endDate = \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['endDate'] . ' 23:59:59');
+        if(!empty($_GET['end'])){
+            $endDate = \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['end'] . ' 23:59:59');
         }
         if(empty($endDate)){
             $endDate = new \DateTime('now');
-        }
+        }        
 
         // array filter ne garde que les valeur truthy donc pas besoin de callback ;)
-        $orderArgs = array_filter([
-            "category" => $_GET["category"] ?? null,
-            "amount" => $_GET["amount"] ?? null,
-            "date" => $_GET["date"] ?? null,
+        $queryArgs = array_filter([
+            "category" => $_GET["c"] ?? null,
+            "amount" => $_GET["a"] ?? null,
+            "date" => $_GET["d"] ?? null,
             "startDate" => $startDate->format("Y-m-d H:i:s"),
             "endDate" => $endDate->format("Y-m-d H:i:s"),
         ]);
 
-        dump($orderArgs);
+        // calcul de la pagination
+        $totalItems = OperationModel::countByUser($user->getId(), $queryArgs);
+        $page = \filter_input(INPUT_GET, 'p', FILTER_SANITIZE_STRING) ?? "1";
 
-        $operations = OperationModel::findByUser($user->getId(), $orderArgs);
+        $queryArgs['limit'] = 5;
+        $queryArgs['offset'] = $queryArgs['limit'] * ($page - 1);
+        
+        $totalPage = intval(ceil($totalItems / $queryArgs['limit']));
 
+        // on récupères les opérations
+        $operations = OperationModel::findByUser($user->getId(), $queryArgs);
+
+        // on calcul le montant total des opérations
         $total = array_reduce($operations, function($carry, $operation) {
             $carry += $operation->getAmount();
             return $carry;
@@ -96,7 +107,9 @@ class MainController extends CoreController {
             "startDate" => $startDate,
             "endDate" => $endDate,
             "total" => $total,
-            "order" => $orderArgs,
+            "order" => $queryArgs,
+            "currentPage" => $page,
+            "totalPage" => $totalPage,
         ]);
     }
 

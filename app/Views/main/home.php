@@ -10,26 +10,26 @@
                 <div class="row mb-0">
                     <div class="input-field col s12 col m6">
                         <i class="material-icons prefix">date_range</i>
-                        <input id="startDate" 
-                            name="startDate" 
+                        <input id="start" 
+                            name="start" 
                             type="date" 
                             class="validate" 
                             value="<?= $startDate->format('Y-m-d')?>" 
                             onchange="this.form.submit();" 
                             required
                         >
-                        <label for="startDate">Du</label>
+                        <label for="start">Du</label>
                     </div>
                     <div class="input-field col s12 col m6">
                         <i class="material-icons prefix">date_range</i>
-                        <input id="endDate" 
-                            name="endDate" type="date" 
+                        <input id="end" 
+                            name="end" type="date" 
                             class="validate" 
                             value="<?= $endDate->format('Y-m-d')?>" 
                             onchange="this.form.submit();" 
                             required
                         >
-                        <label for="endDate">Au</label>
+                        <label for="end">Au</label>
                     </div>
                 </div>
             </form>

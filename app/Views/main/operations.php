@@ -7,32 +7,32 @@
         <h1 class="center-align">Mes opérations</h1>
         <div class="row">
             <form class="col s12 l8 offset-l2 xl6 offset-xl3 mb-0" action="<?= $router->generate("main_operations") ?>">
-                <input type="hidden" name="category" value="<?= $order['category'] ?>">
-                <input type="hidden" name="amount" value="<?= $order['amount'] ?>">
-                <input type="hidden" name="date" value="<?= $order['date'] ?>">
+                <input type="hidden" name="c" value="<?= $order['category'] ?>">
+                <input type="hidden" name="a" value="<?= $order['amount'] ?>">
+                <input type="hidden" name="d" value="<?= $order['date'] ?>">
                 <div class="row mb-0">
                     <div class="input-field col s12 col m6">
                         <i class="material-icons prefix">date_range</i>
-                        <input id="startDate" 
-                            name="startDate" 
+                        <input id="start" 
+                            name="start" 
                             type="date" 
                             class="validate" 
                             value="<?= $startDate->format('Y-m-d')?>" 
                             onchange="this.form.submit();" 
                             required
                         >
-                        <label for="startDate">Du</label>
+                        <label for="start">Du</label>
                     </div>
                     <div class="input-field col s12 col m6">
                         <i class="material-icons prefix">date_range</i>
-                        <input id="endDate" 
-                            name="endDate" type="date" 
+                        <input id="end" 
+                            name="end" type="date" 
                             class="validate" 
                             value="<?= $endDate->format('Y-m-d')?>" 
                             onchange="this.form.submit();" 
                             required
                         >
-                        <label for="endDate">Au</label>
+                        <label for="end">Au</label>
                     </div>
                 </div>
             </form>
@@ -47,17 +47,17 @@
                         <tr>
                             <th>
                                 Catégorie
-                                <a class="right grey-text <?= $order['category'] == 'DESC' ? 'text-darken-2' : 'text-lighten-2' ?>" href="?category=DESC&startDate=<?= $startDate->format('Y-m-d')?>&endDate=<?= $endDate->format('Y-m-d')?>"><i class="material-icons">arrow_downward</i></a>
-                                <a class="right grey-text <?= $order['category'] == 'ASC' ? 'text-darken-2' : 'text-lighten-2' ?>" href="?category=ASC&startDate=<?= $startDate->format('Y-m-d')?>&endDate=<?= $endDate->format('Y-m-d')?>"><i class="material-icons">arrow_upward</i></a>
+                                <a class="right grey-text <?= $order['category'] == 'DESC' ? 'text-darken-2' : 'text-lighten-2' ?>" href="?c=DESC&start=<?= $startDate->format('Y-m-d')?>&end=<?= $endDate->format('Y-m-d')?>"><i class="material-icons">arrow_downward</i></a>
+                                <a class="right grey-text <?= $order['category'] == 'ASC' ? 'text-darken-2' : 'text-lighten-2' ?>" href="?c=ASC&start=<?= $startDate->format('Y-m-d')?>&end=<?= $endDate->format('Y-m-d')?>"><i class="material-icons">arrow_upward</i></a>
                             </th>
                             <th>
                                 Date
-                                <a class="right grey-text <?= $order['date'] == 'DESC' ? 'text-darken-2' : 'text-lighten-2' ?>" href="?date=DESC&startDate=<?= $startDate->format('Y-m-d')?>&endDate=<?= $endDate->format('Y-m-d')?>"><i class="material-icons">arrow_downward</i></a>
-                                <a class="right grey-text <?= $order['date'] == 'ASC' ? 'text-darken-2' : 'text-lighten-2' ?>" href="?date=ASC&startDate=<?= $startDate->format('Y-m-d')?>&endDate=<?= $endDate->format('Y-m-d')?>"><i class="material-icons">arrow_upward</i></a>
+                                <a class="right grey-text <?= $order['date'] == 'DESC' ? 'text-darken-2' : 'text-lighten-2' ?>" href="?d=DESC&start=<?= $startDate->format('Y-m-d')?>&end=<?= $endDate->format('Y-m-d')?>"><i class="material-icons">arrow_downward</i></a>
+                                <a class="right grey-text <?= $order['date'] == 'ASC' ? 'text-darken-2' : 'text-lighten-2' ?>" href="?d=ASC&start=<?= $startDate->format('Y-m-d')?>&end=<?= $endDate->format('Y-m-d')?>"><i class="material-icons">arrow_upward</i></a>
                             </th>
                             <th>
-                                <a class="right grey-text <?= $order['amount'] == 'DESC' ? 'text-darken-2' : 'text-lighten-2' ?>" href="?amount=DESC&startDate=<?= $startDate->format('Y-m-d')?>&endDate=<?= $endDate->format('Y-m-d')?>"><i class="material-icons">arrow_downward</i></a>
-                                <a class="right grey-text <?= $order['amount'] == 'ASC' ? 'text-darken-2' : 'text-lighten-2' ?>" href="?amount=ASC&startDate=<?= $startDate->format('Y-m-d')?>&endDate=<?= $endDate->format('Y-m-d')?>"><i class="material-icons">arrow_upward</i></a>
+                                <a class="right grey-text <?= $order['amount'] == 'DESC' ? 'text-darken-2' : 'text-lighten-2' ?>" href="?a=DESC&start=<?= $startDate->format('Y-m-d')?>&end=<?= $endDate->format('Y-m-d')?>"><i class="material-icons">arrow_downward</i></a>
+                                <a class="right grey-text <?= $order['amount'] == 'ASC' ? 'text-darken-2' : 'text-lighten-2' ?>" href="?a=ASC&start=<?= $startDate->format('Y-m-d')?>&end=<?= $endDate->format('Y-m-d')?>"><i class="material-icons">arrow_upward</i></a>
                                 Montant
                             </th>
                         </tr>
@@ -86,13 +86,23 @@
             </div>
             <div class="row center-align">
                 <ul class="pagination">
-                    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                    <li class="active"><a href="#!">1</a></li>
-                    <li class="waves-effect"><a href="#!">2</a></li>
-                    <li class="waves-effect"><a href="#!">3</a></li>
-                    <li class="waves-effect"><a href="#!">4</a></li>
-                    <li class="waves-effect"><a href="#!">5</a></li>
-                    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                    <li class="<?= $currentPage == 1 ? "disabled" : "wave-effect" ?>">
+                        <a href="?c=<?= $order['category'] ?>&a=<?= $order['amount'] ?>&d=<?= $order['date'] ?>&start=<?= $startDate->format('Y-m-d')?>&end=<?= $endDate->format('Y-m-d')?>&p=<?= max(1, $currentPage - 1) ?>">
+                            <i class="material-icons">chevron_left</i>
+                        </a>
+                    </li>
+                    <?php for($index = 1; $index <= $totalPage; $index++): ?>
+                        <li class="<?= $currentPage == $index ? "active" : "waves-effect" ?>">
+                            <a href="?c=<?= $order['category'] ?>&a=<?= $order['amount'] ?>&d=<?= $order['date'] ?>&start=<?= $startDate->format('Y-m-d')?>&end=<?= $endDate->format('Y-m-d')?>&p=<?= $index ?>">
+                                <?= $index ?>
+                            </a>
+                        </li>
+                    <?php endfor;?>
+                    <li class="<?= $currentPage == $totalPage ? "disabled" : "wave-effect" ?>">
+                        <a href="?c=<?= $order['category'] ?>&a=<?= $order['amount'] ?>&d=<?= $order['date'] ?>&start=<?= $startDate->format('Y-m-d')?>&end=<?= $endDate->format('Y-m-d')?>&p=<?= min($totalPage, $currentPage + 1) ?>">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </li>
                 </ul>
             </div>
         <?php elseif($startDate > $endDate): ?>
