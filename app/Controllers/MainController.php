@@ -16,12 +16,14 @@ class MainController extends CoreController {
      */
     public function home() 
     {
+        // acces granted to connected user only
         $user = User::getConnectedUser();
         if (empty($user)) {
             header("Location: {$this->router->generate("user_login")}");
             exit();
         }
 
+        // test if dates are valieds
         if(!empty($_GET['start'])){
             $startDate = \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['start'] . ' 00:00:00');
         }
@@ -35,7 +37,9 @@ class MainController extends CoreController {
             $endDate = new \DateTime('now');
         }
 
+        // retrieve all categories
         $categories = CategoryModel::findAllStatByUser($user->getId(), $startDate->format("Y-m-d H:i:s"), $endDate->format("Y-m-d H:i:s"));
+        // retrieve total operation amount (could be calculated in php)
         $operation = OperationModel::findTotalStatByUser($user->getId(), $startDate->format("Y-m-d H:i:s"), $endDate->format("Y-m-d H:i:s"));
 
 
@@ -54,14 +58,14 @@ class MainController extends CoreController {
      */
     public function operations()
     {
-        // la page n'est visible que pas les utilisateurs connectés
+        // acces granted to connected user only
         $user = User::getConnectedUser();
         if (empty($user)) {
             header("Location: {$this->router->generate("user_login")}");
             exit();
         }
 
-        // on teste la validité des dates saisies par l'utilisateur
+        // test if date are valids
         if(!empty($_GET['start'])){
             $startDate = \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['start'] . ' 00:00:00');
         }
@@ -75,7 +79,7 @@ class MainController extends CoreController {
             $endDate = new \DateTime('now');
         }        
 
-        // array filter ne garde que les valeur truthy donc pas besoin de callback ;)
+        // array filter only return truthy value so no callback needed in this case ;)
         $queryArgs = array_filter([
             "category" => $_GET["c"] ?? null,
             "amount" => $_GET["a"] ?? null,
@@ -84,7 +88,7 @@ class MainController extends CoreController {
             "endDate" => $endDate->format("Y-m-d H:i:s"),
         ]);
 
-        // calcul de la pagination
+        // calcul pagination
         $totalItems = OperationModel::countByUser($user->getId(), $queryArgs);
         $page = \filter_input(INPUT_GET, 'p', FILTER_SANITIZE_STRING) ?? "1";
 
@@ -93,10 +97,10 @@ class MainController extends CoreController {
         
         $totalPage = intval(ceil($totalItems / $queryArgs['limit']));
 
-        // on récupères les opérations
+        // retrieve operations
         $operations = OperationModel::findByUser($user->getId(), $queryArgs);
 
-        // on calcul le montant total des opérations
+        // calcul total amount of operation
         $total = array_reduce($operations, function($carry, $operation) {
             $carry += $operation->getAmount();
             return $carry;

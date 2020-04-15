@@ -11,7 +11,7 @@ use Appbudget\Controllers\CoreController;
 class OperationController extends CoreController {
 
     /**
-     * Display home page of the application
+     * Display new operation form
      *
      * @return void
      */
@@ -23,8 +23,11 @@ class OperationController extends CoreController {
             exit();
         }
 
+        // default operation type needed to render category select button
         $operation_type = "expense";
         
+        // instantiate  a new operation model with
+        // some default values
         $operation = new OperationModel();
         $operation
             ->setCreatedAt(new \DateTime("now"))
@@ -33,10 +36,14 @@ class OperationController extends CoreController {
             ->setUserId($user->getId())
             ;
 
+        // initialize error list
         $errorList=[];
 
+        // if add is set in post, submit button has bin clicked
+        // else, javascript onchange="submit()" has been called
         $isSubmitted = \filter_input(INPUT_POST, 'add', FILTER_SANITIZE_STRING) == "add"? true : false;
 
+        // form validation
         if(!empty($_POST)) {
             $operation_type_selected = \filter_input(INPUT_POST, 'operation_type', FILTER_SANITIZE_STRING);
             if($operation_type_selected == "expense" || $operation_type_selected == "income"){
@@ -76,9 +83,10 @@ class OperationController extends CoreController {
                 $operation->setComment($comment);
             }
 
+            // if no error found, we can save the operation in database
             if(empty($errorList)) {
                 $result = $operation->insert();
-
+                
                 header("Location: {$this->router->generate("main_home")}");
                 exit();
             }
