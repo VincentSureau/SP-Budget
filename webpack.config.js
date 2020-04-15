@@ -58,8 +58,7 @@ Encore
 
     .copyFiles({
         from: './assets/sw',
-        to: './public/[path][name].[ext]',
-        pattern: /\.(js)$/
+        to: '../[path][name].[ext]',
     })
 
     // uncomment if you're having problems with a jQuery plugin
