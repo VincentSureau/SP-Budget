@@ -9,12 +9,6 @@
       "css": [
         "/assets/app.css"
       ]
-    },
-    "sw": {
-      "js": [
-        "/assets/runtime.js",
-        "/assets/sw.js"
-      ]
     }
   }
 }

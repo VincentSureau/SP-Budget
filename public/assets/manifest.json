@@ -2,6 +2,6 @@
   "assets/app.css": "/assets/app.css",
   "assets/app.js": "/assets/app.js",
   "assets/runtime.js": "/assets/runtime.js",
-  "assets/sw.js": "/assets/sw.js",
-  "assets/vendors~app.js": "/assets/vendors~app.js"
+  "assets/vendors~app.js": "/assets/vendors~app.js",
+  "assets/public/sw.js": "/assets/./public/sw.js"
 }
