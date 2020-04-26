@@ -2,7 +2,6 @@ const staticCacheName = "vincent_sureau_app_budget";
 
 const filesToCache = [
     './',
-    './index.php',
     './404.html',
     './offline.html',
     './assets/app.css',
