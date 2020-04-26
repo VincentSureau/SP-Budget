@@ -61,7 +61,7 @@ self.addEventListener('fetch', event => {
                     .then(response => {
                         // si la page demandée n'existe pas, je renvoie une page d'erreur personnalisée
                         if (response.status === 404) {
-                            return caches.match('pages/404.html');
+                            return caches.match('404.html');
                         }
                         // si la réponse est ok, je la mets dans le cache puis je la retourne
                         return caches.open(staticCacheName)
@@ -73,7 +73,7 @@ self.addEventListener('fetch', event => {
             }).catch(error => {
                 // si pas de connexion, je renvoie une page offline par défaut
                 console.log('Error, ', error);
-                return caches.match('pages/offline.html');
+                return caches.match('offline.html');
             })
     );
 });
