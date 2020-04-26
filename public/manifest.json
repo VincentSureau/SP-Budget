@@ -1,9 +1,0 @@
-{
-  "app.css": "/app.css",
-  "app.js": "/app.js",
-  "runtime.js": "/runtime.js",
-  "vendors~app.js": "/vendors~app.js",
-  "404.html": "/./404.html",
-  "offline.html": "/./offline.html",
-  "sw.js": "/./sw.js"
-}
