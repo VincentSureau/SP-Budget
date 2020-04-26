@@ -15,13 +15,13 @@ class MainController extends CoreController {
      * @return void
      */
     public function home() 
-    {      
+    {
         // acces granted to connected user only
         $user = User::getConnectedUser();
-        if (empty($user)) {
-            header("Location: {$this->router->generate("user_login")}");
-            exit();
-        }
+        // if (empty($user)) {
+        //     header("Location: {$this->router->generate("user_login")}");
+        //     exit();
+        // }
 
         // test if dates are valieds
         if(!empty($_GET['start'])){
@@ -60,10 +60,10 @@ class MainController extends CoreController {
     {
         // acces granted to connected user only
         $user = User::getConnectedUser();
-        if (empty($user)) {
-            header("Location: {$this->router->generate("user_login")}");
-            exit();
-        }
+        // if (empty($user)) {
+        //     header("Location: {$this->router->generate("user_login")}");
+        //     exit();
+        // }
 
         // test if date are valids
         if(!empty($_GET['start'])){

@@ -77,3 +77,11 @@ self.addEventListener('fetch', event => {
             })
     );
 });
+
+
+self.addEventListener('message', function (event) {
+    console.log('form data', event.data)
+    if (event.data.hasOwnProperty('form_data')) {
+        form_data = event.data.form_data
+    }
+})

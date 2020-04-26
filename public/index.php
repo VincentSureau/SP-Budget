@@ -9,7 +9,6 @@ session_start();
 use Appbudget\Application;
 use Symfony\Component\VarDumper\VarDumper;
 
-
 $dumper = new VarDumper();
 
 // require and instanciate application

@@ -7,7 +7,7 @@ use Appbudget\Utils\Database;
 use PDO;
 
 class UserModel extends CoreModel {
-
+    
     private $firstName;
 
     private $lastName;
@@ -166,4 +166,5 @@ class UserModel extends CoreModel {
 
         return $this;
     }
+
 }

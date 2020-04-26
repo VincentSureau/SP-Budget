@@ -3,6 +3,8 @@
 Namespace Appbudget;
 
 use AltoRouter;
+use Appbudget\Utils\User;
+use Appbudget\Models\UserModel;
 
 class Application {
 
@@ -30,11 +32,21 @@ class Application {
 		$this->router->map('GET', '/', 'MainController#home', 'main_home');
 		$this->router->map('GET', '/mes-operations', 'MainController#operations', 'main_operations');
 		$this->router->map('GET|POST', '/ajouter-une-operation', 'OperationController#add', 'operation_add');
+		$this->router->map('POST', '/add-operation-ajax', 'OperationController#ajaxAdd', 'operation_add_ajax');
 		$this->router->map('GET|POST', '/connexion', 'UserController#login', 'user_login');
 		$this->router->map('GET', '/logout', 'UserController#logout', 'user_logout');
 	}
 
 	public function run() {
+		$user = new UserModel();
+        $user
+            ->setId(1)
+            ->setFirstName("Vincent")
+            ->setLastName("Sureau")
+            ->setEmail("vincentsureau5@gmail.com")
+		;
+		User::connect($user);
+
 		$match =  $this->router->match();
 		if ($match) {
 			list($controllerName, $methodName) = explode('#', $match['target']);

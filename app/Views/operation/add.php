@@ -3,7 +3,7 @@
 
 <!-- content -->
 <div class="container">
-    <form class="z-depth-4 card-rounded" action="<?= $router->generate("main_home") ?>ajouter-une-operation" method="POST">
+    <form id="operationForm" class="z-depth-4 card-rounded" action="<?= $router->generate("main_home") ?>ajouter-une-operation" method="POST">
         <div class="row">
             <h1 class="center-align">Ajouter une opération</h1>
         </div>
@@ -19,7 +19,6 @@
                 <input name="operation_type" 
                     value="expense" 
                     type="radio" 
-                    onchange="this.form.submit();"
                     <?= $operation_type == "expense" ? "checked" : "" ?>
                 />
                 <span>Dépense</span>
@@ -28,7 +27,6 @@
                 <input name="operation_type"
                     value="income" 
                     type="radio" 
-                    onchange="this.form.submit();"
                     <?= $operation_type == "income" ? "checked" : "" ?>
                 />
                 <span>Revenu</span>
@@ -37,7 +35,7 @@
         <div class="row">
             <div class="input-field col s12 l6">
                 <i class="material-icons prefix">euro_symbol</i>
-                <input id="amount" name="amount" type="number" step="0.01" class="validate" value="<?= $operation->getAmount() ?? 0 ?>">
+                <input id="amount" name="amount" type="number" step="0.01" placeholder="0" class="validate" value="<?= $operation->getAmount() ?? "" ?>">
                 <label for="amount">Montant</label>
             </div>
             <div class="input-field col s12 l6">
@@ -51,7 +49,7 @@
                 <i class="material-icons prefix">shopping_cart</i>
                 <select id="category" name="category" class="validate" required>
                     <option value="" disabled selected>Choisir une catégorie</option>
-                    <?php foreach($categories as $category) : ?>
+                    <?php foreach($categoriesExpense as $category) : ?>
                         <option value="<?= $category->getId() ?>" <?= ($operation->getCategoryId() == $category->getId()) ? "selected": "" ?> ><?= $category->getName() ?></option>
                     <?php endforeach; ?>
                 </select>
@@ -80,3 +78,7 @@
         </div>
     </form>
 </div>
+<script>
+    const categoriesExpense = <?= $categoriesExpenseJs ?>;
+    const categoriesIncome = <?= $categoriesIncomeJs ?>;
+</script>
