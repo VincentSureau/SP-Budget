@@ -1,4 +1,4 @@
-const staticCacheName = "vincent_sureau_app_budget";
+const staticCacheName = "vincent_sureau_app_budget_v2";
 
 const filesToCache = [
     './',
