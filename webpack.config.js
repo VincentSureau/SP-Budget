@@ -8,9 +8,9 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 
 Encore
     // directory where compiled assets will be stored
-    .setOutputPath('public/assets/')
+    .setOutputPath('public/')
     // public path used by the web server to access the output path
-    .setPublicPath('/assets')
+    .setPublicPath('/')
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
 
@@ -57,8 +57,13 @@ Encore
     .enableSassLoader()
 
     .copyFiles({
+        from: './assets/staticPages',
+        to: './[path][name].[ext]',
+    })
+
+    .copyFiles({
         from: './assets/sw',
-        to: '../[path][name].[ext]',
+        to: './[path][name].[ext]',
     })
 
     // uncomment if you're having problems with a jQuery plugin

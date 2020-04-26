@@ -114,8 +114,3 @@
     </div>
 
 </div>
-<script>
-const labels =<?= json_encode(array_map(function($category){return $category->getName();}, $categories)); ?>;
-const data =<?= json_encode(array_map(function($category){return $category->getTotalAmount();}, $categories)); ?>;
-const colors =<?= json_encode(array_map(function($category){return "#" . str_pad(dechex(rand(0x000000, 0xFFFFFF)), 6, 0, STR_PAD_LEFT);}, $categories)); ?>;
-</script>

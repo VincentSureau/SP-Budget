@@ -15,7 +15,7 @@ class MainController extends CoreController {
      * @return void
      */
     public function home() 
-    {
+    {      
         // acces granted to connected user only
         $user = User::getConnectedUser();
         if (empty($user)) {
