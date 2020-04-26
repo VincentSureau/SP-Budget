@@ -1,6 +1,6 @@
 // install service worker
 if ('serviceWorker' in navigator) {
-    console.log("request notification permission")
+    // ask permission to send notification to the navigator
     Notification.requestPermission(permission => {
         if (!('permission' in Notification)) {
             Notification.permission = permission;
@@ -8,6 +8,7 @@ if ('serviceWorker' in navigator) {
         return permission;
     })
     .then(() => {
+        // register service worker
         navigator.serviceWorker.register('sw.js')
             .then(swReg => {
                 console.log('Service Worker is registered', swReg);

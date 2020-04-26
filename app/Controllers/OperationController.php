@@ -125,7 +125,8 @@ class OperationController extends CoreController {
      * @return void
      */
     public function ajaxAdd() {
-
+        $user = User::getConnectedUser();
+        
         $operation = new OperationModel();
         $operation
             ->setCreatedAt(new \DateTime("now"))
