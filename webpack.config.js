@@ -71,6 +71,11 @@ Encore
         to: '../[path][name].[ext]',
     })
 
+    .copyFiles({
+        from: './assets/logos',
+        to: '../images/[path][name].[ext]',
+    })
+
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
     ;

@@ -6,17 +6,17 @@ const filesToCache = [
     './404.html',
     './offline.html',
     './assets/app.css',
-    './assets/runtine.js',
+    './assets/runtime.js',
     './assets/app.js',
     './images/logo-b.svg',
-    './images/logo-bbanking.svg'
+    './images/logo-banking.svg'
 ];
 
 // on installe le service worker
 self.addEventListener('install', event => {
     console.log('Attempting to install service worker and cache static assets');
     event.waitUntil(
-        // on ajoute les fichier static au chache
+        // on ajoute les fichier static au cache
         caches.open(staticCacheName)
             .then(cache => {
                 return cache.addAll(filesToCache);
