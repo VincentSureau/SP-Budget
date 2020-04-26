@@ -17,4 +17,6 @@ if ('serviceWorker' in navigator) {
                 console.error('Service Worker Error', err);
             });
     });
+} else {
+    console.warn('serviceworker not supported by navigator');
 }
